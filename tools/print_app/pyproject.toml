@@ -1,0 +1,7 @@
+[project]
+name = "print-app"
+version = "0.1.0"
+description = "Print application for Hate Measured in Inches"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = ["textual >= 6.6.0"]
