@@ -36,4 +36,4 @@ are not, I might rename the file and print it using the tool again.
 
 ## AI Coding Tools
 
-See [../../CLAUDE.md](CLAUDE.md) in the root of this repo.
+See [CLAUDE.md](../../CLAUDE.md) in the root of this repo.
