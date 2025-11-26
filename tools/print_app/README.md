@@ -34,3 +34,6 @@ I'll check the directory for any PDF files that remain, as this
 indicates that they are likely accidental duplicates. However, if they
 are not, I might rename the file and print it using the tool again.
 
+## AI Coding Tools
+
+See [../../CLAUDE.md](CLAUDE.md) in the root of this repo.
