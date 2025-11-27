@@ -1,10 +1,16 @@
-Screen {
+#pbContainer {
+    padding-top: 2;
+    padding-bottom: 2;
+    layout: horizontal;
+    overflow-x: auto;
 }
 
 #pb {
-    height: 6;
     align: center middle;
-    width: 100%;
+}
+
+#pbLabel {
+    padding-right: 1;
 }
 
 #pb .bar--bar {
@@ -16,6 +22,8 @@ Screen {
     padding: 0 1;
     border: #009999;
     border-title-color: #ffff00;
+    min-width: 20;
+    overflow-x: auto;
 }
 
 .working {
@@ -23,5 +31,5 @@ Screen {
 }
 
 .done {
-    color: #ff0000;
+    color: #006666;
 }

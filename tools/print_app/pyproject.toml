@@ -4,4 +4,7 @@ version = "0.1.0"
 description = "Print application for Hate Measured in Inches"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = ["textual >= 6.6.0"]
+dependencies = [
+    "textual >= 6.6.0",
+    "watchdog >= 6.0.0"
+]

@@ -27,6 +27,7 @@ class PrintApp(App):
         ("p", "print", "Print File"),
         ("s", "skip", "Skip File"),
         ("D", "delete", "Delete File"),
+        ("r", "refresh", "Refresh Directory"),
         ("q", "quit", "Quit"),
     ]
     index = reactive(0)
@@ -43,11 +44,13 @@ class PrintApp(App):
         self.label.border_title = "Next File"
 
         self.pb = ProgressBar(id="pb", total=self.len, show_eta=False)
+        self.pb_label = Label(id="pbLabel")
+
         self.update_status()
 
         yield Header()
         yield Footer()
-        yield self.pb
+        yield Center(self.pb_label, self.pb, id="pbContainer")
         yield Center(self.label)
 
     def action_skip(self) -> None:
@@ -87,8 +90,18 @@ class PrintApp(App):
         self.index += 1
         self.update_status()
 
+    def action_refresh(self) -> None:
+        """Refresh directory list."""
+        self.files = get_files()
+        self.index = 0
+        self.len = len(self.files)
+        self.pb.total = self.len
+        self.update_status()
+
     def update_status(self) -> None:
         """Update all status items."""
+        self.pb_label.content = f"{self.index}/{self.len}"
+
         if self.index < self.len:
             self.label.content = self.files[self.index]
             tm = time.localtime(os.path.getmtime(self.label.content))
