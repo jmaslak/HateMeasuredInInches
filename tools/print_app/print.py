@@ -68,8 +68,8 @@ class PrintApp(App):
 
     def action_print(self) -> None:
         """Print document and move."""
-        fn = self.files[self.index]
         if self.index < self.len:
+            fn = self.files[self.index]
             subprocess.call(["lpr", fn])
 
             with open("printed.lst", "a") as f:
@@ -87,8 +87,8 @@ class PrintApp(App):
                 if not os.path.exists(newname):
                     shutil.move(fn, newname)
 
-        self.index += 1
-        self.update_status()
+            self.index += 1
+            self.update_status()
 
     def action_refresh(self) -> None:
         """Refresh directory list."""
