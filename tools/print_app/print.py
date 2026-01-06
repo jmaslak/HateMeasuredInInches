@@ -22,6 +22,7 @@ class PrintApp(App):
     """App to print output."""
 
     CSS_PATH = "print.css"
+    TITLE = "Print Helper"
 
     BINDINGS = [
         ("p", "print", "Print File"),
