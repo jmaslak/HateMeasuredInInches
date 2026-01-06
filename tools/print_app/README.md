@@ -7,7 +7,11 @@ must both be included, and the Python textual module must be installed.
 Once installed, the user will dump PDFs into that directory.  When
 desired, the user can enter that directory, run `print.py`, and print
 files one at a time in chronological (based on modification time of
-directory entry pointing at the PDF file).
+directory entry pointing at the PDF file). This is done by pressing 'p'.
+If a print needs to be re-printed, within the same session, the user
+can press 'P'.  There are also options for deleting a file (removing and
+not printing it) and skipping a file (not printing it but also not
+removing it).
 
 When a user prints a file, it is moved to a `printed/` subdirectory
 under the current directory and it is added to the `printed.lst` file

@@ -22,8 +22,10 @@
     padding: 0 1;
     border: #009999;
     border-title-color: #ffff00;
+    max-width: 100%;
     min-width: 20;
-    overflow-x: auto;
+    text-wrap: wrap;
+
 }
 
 .working {

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 #
-# Copyright (C) 2025 Joelle Maslak
+# Copyright (C) 2025-2026 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -25,12 +25,14 @@ class PrintApp(App):
 
     BINDINGS = [
         ("p", "print", "Print File"),
+        ("P", "reprint", "Re-print Last File"),
         ("s", "skip", "Skip File"),
         ("D", "delete", "Delete File"),
         ("r", "refresh", "Refresh Directory"),
         ("q", "quit", "Quit"),
     ]
     index = reactive(0)
+    last_printed = None
 
     def compose(self) -> ComposeResult:
         """Create child widgets."""
@@ -55,22 +57,30 @@ class PrintApp(App):
 
     def action_skip(self) -> None:
         """Skip current file."""
-        self.index += 1
-        self.update_status()
+        if self.index < self.len:
+            fn = self.files[self.index]
+            self.notify(f"Skipping {fn}")
+            self.index += 1
+            self.update_status()
+        else:
+            self.notify("No file to skip", severity="warning")
 
     def action_delete(self) -> None:
         """Unlink document."""
         if self.index < self.len:
             os.unlink(self.files[self.index])
-
-        self.index += 1
-        self.update_status()
+            self.notify(f"Deleted: {self.files[self.index]}")
+            self.index += 1
+            self.update_status()
+        else:
+            self.notify("No file to delete", severity="warning")
 
     def action_print(self) -> None:
         """Print document and move."""
         if self.index < self.len:
             fn = self.files[self.index]
             subprocess.call(["lpr", fn])
+            self.notify(f"Printed: {fn}")
 
             with open("printed.lst", "a") as f:
                 f.write(f"{os.path.getmtime(fn)}|{fn}\n")
@@ -87,8 +97,14 @@ class PrintApp(App):
                 if not os.path.exists(newname):
                     shutil.move(fn, newname)
 
+                self.last_printed = newname
+            else:
+                self.last_printed = fn
+
             self.index += 1
             self.update_status()
+        else:
+            self.notify("No file to print", severity="warning")
 
     def action_refresh(self) -> None:
         """Refresh directory list."""
@@ -97,6 +113,15 @@ class PrintApp(App):
         self.len = len(self.files)
         self.pb.total = self.len
         self.update_status()
+
+    def action_reprint(self) -> None:
+        """Re-print the last file."""
+        if self.last_printed is not None:
+            subprocess.call(["lpr", self.last_printed])
+            fn = os.path.basename(self.last_printed)
+            self.notify(f"Reprinted: {fn}")
+        else:
+            self.notify("No file to reprint", severity="warning")
 
     def update_status(self) -> None:
         """Update all status items."""
